@@ -147,10 +147,10 @@ const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       <footer>
         <Container mt="8" py="8" maxWidth="container.xl">
           <Text>
-            Built by{' '}
-            <Link isExternal fontWeight="600" href="https://twitter.com/jjperezaguinaga">Jose Aguinaga</Link>{' '}
-            and{' '}
-            <Link isExternal fontWeight="600" href="https://twitter.com/wilsoncusack">Wilson Cusack</Link>.
+            Concept by{' '}
+            <Link isExternal fontWeight="600" href="https://twitter.com/wilsoncusack">Wilson Cusack</Link>,
+            application by{' '}
+            <Link isExternal fontWeight="600" href="https://twitter.com/jjperezaguinaga">Jose Aguinaga</Link>.
           </Text>
         </Container>
       </footer>
