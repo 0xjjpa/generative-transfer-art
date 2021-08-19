@@ -9,30 +9,42 @@ import { ethers } from 'ethers'
  */
 export type StateType = {
   balance: string
+  tokenIds: string[]
 }
-export type ActionType = {
-  type: 'SET_BALANCE'
-  balance: StateType['balance']
-}
+export type ActionType =
+  | {
+      type: 'SET_BALANCE'
+      balance: StateType['balance']
+    }
+  | {
+      type: 'SET_TOKEN_IDS'
+      tokenIds: StateType['tokenIds']
+    }
 
 /**
  * Component
  */
 export const initialState: StateType = {
   balance: '',
+  tokenIds: [],
 }
 
 export function reducer(state: StateType, action: ActionType): StateType {
-    switch (action.type) {
-      case 'SET_BALANCE':
-        return {
-          ...state,
-          balance: action.balance,
-        }
-      default:
-        throw new Error()
-    }
+  switch (action.type) {
+    case 'SET_BALANCE':
+      return {
+        ...state,
+        balance: action.balance,
+      }
+    case 'SET_TOKEN_IDS':
+      return {
+        ...state,
+        tokenIds: action.tokenIds,
+      }
+    default:
+      throw new Error()
   }
+}
 
 export async function fetchBalance({
   provider,
@@ -50,8 +62,19 @@ export async function fetchBalance({
       provider
     ) as TransferArtType
     try {
-      const balance = await contract.balanceOf(address)
-      dispatch({ type: 'SET_BALANCE', balance: balance.toString() })
+      const totalTokensOwnedByAccount = await contract.balanceOf(address)
+      const promisedTokenIdsByAccount = [
+        ...Array(+totalTokensOwnedByAccount),
+      ].map((_, index) => contract.tokenOfOwnerByIndex(address, index))
+      const tokenIdsByAccount = (await Promise.all(promisedTokenIdsByAccount)).map(tokenId => tokenId.toString())
+      dispatch({
+        type: 'SET_BALANCE',
+        balance: totalTokensOwnedByAccount.toString(),
+      })
+      dispatch({
+        type: 'SET_TOKEN_IDS',
+        tokenIds: tokenIdsByAccount,
+      })
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log('Error: ', err)

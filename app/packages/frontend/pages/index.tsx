@@ -40,8 +40,9 @@ function HomeIndex(): JSX.Element {
         Generative Transfer Art Project 1
       </Heading>
       <Box maxWidth="container.sm" p="8" mt="8" bg="gray.100">
-        <Text fontSize="xl">
-          Contract Address: {TRANSFER_ART_CONTRACT_ADDRESS}
+        <Text fontSize="xl">Contract Address:</Text>
+        <Text fontSize="xl" fontFamily="mono">
+          {TRANSFER_ART_CONTRACT_ADDRESS}
         </Text>
         <Divider my="8" borderColor="gray.400" />
         <Box>
@@ -50,21 +51,27 @@ function HomeIndex(): JSX.Element {
           ) : (
             <TAList
               balance={state.balance}
+              tokenIds={state.tokenIds}
               loadBalance={() =>
                 fetchBalance({ provider: library, address: account, dispatch })
               }
             />
           )}
         </Box>
-        <Divider my="8" borderColor="gray.400" />
-        <Text mb="4">This button only works on a Local Chain.</Text>
-        <Button
-          colorScheme="teal"
-          onClick={sendFunds}
-          isDisabled={!isLocalChain}
-        >
-          Send Funds From Local Hardhat Chain
-        </Button>
+        {chainId == 1337 ||
+          (chainId == 31337 && (
+            <>
+              <Divider my="8" borderColor="gray.400" />
+              <Text mb="4">This button only works on a Local Chain.</Text>
+              <Button
+                colorScheme="teal"
+                onClick={sendFunds}
+                isDisabled={!isLocalChain}
+              >
+                Send Funds From Local Hardhat Chain
+              </Button>
+            </>
+          ))}
       </Box>
     </Layout>
   )
