@@ -1,3 +1,4 @@
+import { TransferArt as TRANSFER_ART_CONTRACT_ADDRESS } from '../../artifacts/contracts/contractAddress'
 import { useEffect } from 'react'
 import { ethers } from 'ethers'
 import { NftProvider, useNft } from 'use-nft'
@@ -13,7 +14,7 @@ export const TAList = ({
   tokenIds: string[]
   loadBalance: () => void
 }) => {
-  const { account, library } = useEthers()
+  const { library } = useEthers()
   useEffect(() => {
     loadBalance()
   }, [])
@@ -25,7 +26,8 @@ export const TAList = ({
         <Flex>
           {tokenIds.map((tokenId) => (
             <Nft
-              address={'0x5d99371a4297dfd301a1f22eff22a7e0ed9b4482'}
+              key={tokenId}
+              address={TRANSFER_ART_CONTRACT_ADDRESS}
               tokenId={tokenId}
             />
           ))}
@@ -36,7 +38,6 @@ export const TAList = ({
 }
 
 function Nft({ address, tokenId }: { address: string; tokenId: string }) {
-  console.log('ADRESS', address, tokenId)
   const { loading, error, nft } = useNft(address, tokenId)
 
   // nft.loading is true during load.
