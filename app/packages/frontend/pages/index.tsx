@@ -47,8 +47,8 @@ function HomeIndex(): JSX.Element {
       <Heading as="h1" mb="8">
         Generative Transfer Art Project 1
       </Heading>
-      <SimpleGrid columns={2} spacing={10}>
-        <Box maxWidth="container.sm" p="8" mt="8" bg="gray.100">
+      <SimpleGrid columns={[1, 1, 2, 2]} spacing={10}>
+        <Box p="8" mt="8" bg="gray.100">
           <Text fontSize="xl">Contract Address:</Text>
           <Text fontSize="xl" fontFamily="mono">
             {TRANSFER_ART_CONTRACT_ADDRESS}
@@ -86,7 +86,7 @@ function HomeIndex(): JSX.Element {
               </>
             ))}
         </Box>
-        <Box maxWidth="container.sm" p="8" mt="8" bg="gray.100">
+        <Box p="8" mt="8" bg="gray.100">
           <TACollection />
         </Box>
       </SimpleGrid>
