@@ -6,7 +6,7 @@ export const PROVIDERS = {
   [ChainId.Hardhat]: 'http://localhost:8555',
   [ChainId.Localhost]: 'http://localhost:8545',
 }
-export const DEFAULT_COLLECTION_SIZE = 12
+export const DEFAULT_COLLECTION_SIZE = 9
 export const DEFAULT_CHAIN_ID = ChainId.Mainnet
 export const DEFAULT_NETWORK = PROVIDERS[DEFAULT_CHAIN_ID]
 export const INFURA_CONFIGURATION = { infura: INFURA_ID }
