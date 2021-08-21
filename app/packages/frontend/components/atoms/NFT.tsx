@@ -1,5 +1,9 @@
-import { Box, Text, Image, Skeleton, Flex } from '@chakra-ui/react'
+import { Box, Text, Image, Skeleton, Flex, Link } from '@chakra-ui/react'
 import { useNft } from 'use-nft'
+import { ENS } from './ENS'
+import { useOwner } from '../../lib/hooks'
+import { DEFAULT_CHAIN_ID } from '../../lib/constants'
+import { getExplorerAddressLink } from '@usedapp/core'
 
 export const Nft = ({
   address,
@@ -9,6 +13,7 @@ export const Nft = ({
   tokenId: string
 }) => {
   const { loading, error, nft } = useNft(address, tokenId)
+  const owner = useOwner(tokenId)
 
   // nft.loading is true during load.
   if (loading) return <Skeleton height="150px" />
@@ -20,7 +25,12 @@ export const Nft = ({
   const realId = nft.name.split('#').pop()
   const og = realId == tokenId
   return (
-    <Flex m="5" justifyContent="center" flexDirection="column" alignItems="center">
+    <Flex
+      m="5"
+      justifyContent="center"
+      flexDirection="column"
+      alignItems="center"
+    >
       <Flex justifyContent="center">
         <Text
           bgClip={og && 'text'}
@@ -33,9 +43,14 @@ export const Nft = ({
         </Text>
       </Flex>
       <Box p="5" background="whiteAlpha.900" border="1px solid #ddd">
-        <Image src={nft.image} alt={nft.name}  />
+        <Image src={nft.image} alt={nft.name} />
       </Box>
-      <Text mt="2" fontSize="small">Token Id #{tokenId}</Text>
+      <Text mt="2" fontSize="small">
+        Token Id #{tokenId}
+      </Text>
+      <Link href={getExplorerAddressLink(owner, DEFAULT_CHAIN_ID)} isExternal>
+        <ENS props={{ fontSize: 'xs' }} address={owner} />
+      </Link>
     </Flex>
   )
 }
