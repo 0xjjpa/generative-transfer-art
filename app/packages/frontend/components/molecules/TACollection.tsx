@@ -48,7 +48,7 @@ export const TACollection = () => {
         <Divider m="5" />
         <SimpleGrid columns={[1, 2, 2, 3]} spacing={5}>
           {tokenIds.map((tokenId) => (
-            <Box key={tokenId}>
+            <Box key={tokenId} background="blackAlpha.100" borderRadius="5">
               <Nft address={TRANSFER_ART_CONTRACT_ADDRESS} tokenId={tokenId} />
             </Box>
           ))}

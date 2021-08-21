@@ -23,10 +23,10 @@ export const TAList = ({
   return (
     <NftProvider fetcher={['ethers', { ethers, provider: library }]}>
       <Box>
-        <Text fontSize="lg">Owned {balance}</Text>
+        <Text fontSize="lg" my="5">Owned {balance}</Text>
         <SimpleGrid columns={[1, 2, 2, 3]} spacing={10}>
           {tokenIds.map((tokenId) => (
-            <Box key={tokenId}>
+            <Box key={tokenId} background="blackAlpha.100" borderRadius="5">
               <Nft address={TRANSFER_ART_CONTRACT_ADDRESS} tokenId={tokenId} />
             </Box>
           ))}

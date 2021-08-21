@@ -20,18 +20,22 @@ export const Nft = ({
   const realId = nft.name.split('#').pop()
   const og = realId == tokenId
   return (
-    <Box m="5">
+    <Flex m="5" justifyContent="center" flexDirection="column" alignItems="center">
       <Flex justifyContent="center">
         <Text
-          bgClip={og && "text"}
+          bgClip={og && 'text'}
           bgGradient={og && 'linear(to-l, #7928CA, #FF0080)'}
           fontSize="xl"
           as="h2"
+          pb="5"
         >
           {og ? `Token #${realId}` : `Copy of ${realId}`}
         </Text>
       </Flex>
-      <Image src={nft.image} alt={nft.name} p="5" />
-    </Box>
+      <Box p="5" background="whiteAlpha.900" border="1px solid #ddd">
+        <Image src={nft.image} alt={nft.name}  />
+      </Box>
+      <Text mt="2" fontSize="small">Token Id #{tokenId}</Text>
+    </Flex>
   )
 }
