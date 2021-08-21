@@ -7,10 +7,12 @@ import { Box, Text, SimpleGrid } from '@chakra-ui/layout'
 import { Nft } from '../atoms/NFT'
 
 export const TAList = ({
+  address,
   balance,
   tokenIds,
   loadBalance,
 }: {
+  address: string
   balance: string
   tokenIds: string[]
   loadBalance: () => void
@@ -18,7 +20,7 @@ export const TAList = ({
   const { library } = useEthers()
   useEffect(() => {
     loadBalance()
-  }, [])
+  }, [address])
 
   return (
     <NftProvider fetcher={['ethers', { ethers, provider: library }]}>

@@ -5,15 +5,20 @@ import {
   Heading,
   Text,
   SimpleGrid,
+  Input,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
 import { providers, utils } from 'ethers'
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import { TransferArt as TRANSFER_ART_CONTRACT_ADDRESS } from '../artifacts/contracts/contractAddress'
 import { TAList } from '../components/molecules/TAList'
 import { TACollection } from '../components/molecules/TACollection'
 import Layout from '../components/layout/Layout'
 import { fetchBalance, initialState, reducer } from '../lib/reducers'
+import { useEffect } from 'react'
+import { getCurrentProvider } from '../lib/connectors'
 
 /**
  * Constants & Helpers
@@ -25,6 +30,7 @@ const localProvider = new providers.StaticJsonRpcProvider(
 
 function HomeIndex(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [currentAddress, setCurrentAddress] = useState<string>('')
   const { account, chainId, library } = useEthers()
 
   const isLocalChain =
@@ -42,6 +48,18 @@ function HomeIndex(): JSX.Element {
     })
   }
 
+  useEffect(() => {
+    if (utils.isAddress(state.address)) {
+      console.log("LOADING NEW ADDRESS", state.address);
+      const currentAddress = utils.getAddress(state.address)
+      setCurrentAddress(currentAddress)
+    }
+    return (() => setCurrentAddress(''))
+  }, [state.address])
+
+  const addressToLoad = currentAddress ? currentAddress : account;
+  console.log('addresstl', addressToLoad)
+
   return (
     <Layout>
       <Heading as="h1" mb="8">
@@ -54,17 +72,53 @@ function HomeIndex(): JSX.Element {
             {TRANSFER_ART_CONTRACT_ADDRESS}
           </Text>
           <Divider my="8" borderColor="gray.400" />
+          <Box my="5">
+            <Text mb="2">
+              Look up someone's collection, either by pasting an address or
+              clicking them in the gallery.
+            </Text>
+            <InputGroup>
+              <Input
+                background="white"
+                type="text"
+                placeholder="0x1234..."
+                onChange={(e) => {
+                  dispatch({
+                    type: 'SET_ADDRESS_SEARCH',
+                    address: e.target.value,
+                  })
+                }}
+              />
+              {state.address != '' && (
+                <InputRightElement width="4.5rem">
+                  <Button
+                    h="1.75rem"
+                    size="sm"
+                    onClick={() => {
+                      dispatch({
+                        type: 'SET_ADDRESS_SEARCH',
+                        address: '',
+                      })
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </InputRightElement>
+              )}
+            </InputGroup>
+          </Box>
           <Box>
-            {!account ? (
+            {!addressToLoad ? (
               <Text>Please connect your wallet to see your tokens.</Text>
             ) : (
               <TAList
+                address={addressToLoad}
                 balance={state.balance}
                 tokenIds={state.tokenIds}
                 loadBalance={() =>
                   fetchBalance({
-                    provider: library,
-                    address: account,
+                    provider: getCurrentProvider(library),
+                    address: addressToLoad,
                     dispatch,
                   })
                 }

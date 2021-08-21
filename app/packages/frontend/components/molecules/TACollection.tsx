@@ -1,9 +1,6 @@
 import { useEthers } from '@usedapp/core'
-import { getDefaultProvider } from 'ethers'
 import {
   DEFAULT_COLLECTION_SIZE,
-  DEFAULT_NETWORK,
-  INFURA_CONFIGURATION,
 } from '../../lib/constants'
 import { TransferArt as TRANSFER_ART_CONTRACT_ADDRESS } from '../../artifacts/contracts/contractAddress'
 import { useState } from 'react'
@@ -13,6 +10,7 @@ import { Box, Text, Flex } from '@chakra-ui/layout'
 import { Nft } from '../atoms/NFT'
 import { Divider, SimpleGrid } from '@chakra-ui/react'
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { getCurrentProvider } from '../../lib/connectors'
 
 const TANavigator = ({ page, setPage }) => {
   const nextPage = () => setPage(page + 1)
@@ -34,8 +32,7 @@ const TANavigator = ({ page, setPage }) => {
 export const TACollection = () => {
   const [page, setPage] = useState(0)
   const { library } = useEthers()
-  const provider =
-    library || getDefaultProvider(DEFAULT_NETWORK, INFURA_CONFIGURATION)
+  const provider = getCurrentProvider(library)
   const tokenIds = [...Array(DEFAULT_COLLECTION_SIZE)].map(
     (_, tokenId) => `${page * DEFAULT_COLLECTION_SIZE + tokenId + 1}`
   )
