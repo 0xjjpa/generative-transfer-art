@@ -6,28 +6,11 @@ import { TransferArt as TRANSFER_ART_CONTRACT_ADDRESS } from '../../artifacts/co
 import { useState } from 'react'
 import { ethers } from 'ethers'
 import { NftProvider } from 'use-nft'
-import { Box, Text, Flex } from '@chakra-ui/layout'
+import { Box } from '@chakra-ui/layout'
 import { Nft } from '../atoms/NFT'
+import { TANavigator } from '../atoms/TANavigator'
 import { Divider, SimpleGrid } from '@chakra-ui/react'
-import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
 import { getCurrentProvider } from '../../lib/connectors'
-
-const TANavigator = ({ page, setPage }) => {
-  const nextPage = () => setPage(page + 1)
-  const prevPage = () => setPage(page - 1)
-  return (<Flex justifyContent="space-around">
-    {page != 0 && (
-      <Flex alignItems="center" cursor="pointer" onClick={prevPage}>
-        <ArrowBackIcon mr="2" />
-        <Text>Prev Page</Text>
-      </Flex>
-    )}
-    <Flex alignItems="center" cursor="pointer" onClick={nextPage}>
-      <Text>Next Page</Text>
-      <ArrowForwardIcon ml="2" />
-    </Flex>
-  </Flex>)
-}
 
 export const TACollection = () => {
   const [page, setPage] = useState(0)
