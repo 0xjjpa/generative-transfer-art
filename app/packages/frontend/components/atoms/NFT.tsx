@@ -1,4 +1,4 @@
-import { Box, Text, Image, Skeleton, Tag, Flex } from '@chakra-ui/react'
+import { Box, Text, Image, Skeleton, Flex } from '@chakra-ui/react'
 import { useNft } from 'use-nft'
 
 export const Nft = ({
@@ -14,36 +14,24 @@ export const Nft = ({
   if (loading) return <Skeleton height="150px" />
 
   // nft.error is an Error instance in case of error.
-  if (error || !nft) return <>Error.</>
+  if (error || !nft) return <Skeleton height="150px" />
 
   // You can now display the NFT metadata.
   const realId = nft.name.split('#').pop()
   const og = realId == tokenId
   return (
     <Box m="5">
-      <Flex>
+      <Flex justifyContent="center">
         <Text
           bgClip={og && "text"}
           bgGradient={og && 'linear(to-l, #7928CA, #FF0080)'}
           fontSize="xl"
           as="h2"
         >
-          {nft.name.split('-').pop()}
+          {og ? `Token #${realId}` : `Copy of ${realId}`}
         </Text>
       </Flex>
-      <Text fontSize="sm" as="h3">
-        Token ID: {tokenId}
-      </Text>
       <Image src={nft.image} alt={nft.name} p="5" />
-      {og ? (
-        <Tag size="sm" colorScheme="green">
-          OG
-        </Tag>
-      ) : (
-        <Tag size="sm" colorScheme="red">
-          Copy
-        </Tag>
-      )}
     </Box>
   )
 }

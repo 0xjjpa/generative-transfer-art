@@ -46,7 +46,7 @@ export const TACollection = () => {
       <Box>
         <TANavigator page={page} setPage={setPage} />
         <Divider m="5" />
-        <SimpleGrid columns={[1, 2, 2, 3]} spacing={10}>
+        <SimpleGrid columns={[1, 2, 2, 3]} spacing={5}>
           {tokenIds.map((tokenId) => (
             <Box key={tokenId}>
               <Nft address={TRANSFER_ART_CONTRACT_ADDRESS} tokenId={tokenId} />
