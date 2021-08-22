@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { TransferArt as TransferArtType } from '../../types/typechain'
 import { getCurrentProvider } from '../../lib/connectors'
 import { Contract } from 'ethers'
+import { NFTProps } from './NFTProps'
 
 export const Nft = ({
   address,
@@ -29,6 +30,7 @@ export const Nft = ({
   const { loading, error, nft } = useNft(address, tokenId)
   const { colorMode } = useColorMode()
   const [realOwner, setRealOwner] = useState('')
+  const [isWrapper, setIsWrapper] = useState(false)
   const provider = getCurrentProvider(library)
   const bgColor = { light: 'gray.50', dark: 'gray.600' }
   const owner = useOwner(tokenId)
@@ -37,7 +39,7 @@ export const Nft = ({
     const loadRealOwner = async () => {
       const realOwner =
         owner == WRAPPED_TOKEN_CONTRACT
-          ? await (contract => contract.ownerOf(tokenId))(
+          ? await ((contract) => contract.ownerOf(tokenId))(
               new Contract(
                 WRAPPED_TOKEN_CONTRACT,
                 TransferArt.abi,
@@ -46,6 +48,7 @@ export const Nft = ({
             )
           : owner
       setRealOwner(realOwner)
+      setIsWrapper(realOwner != owner)
     }
     loadRealOwner()
   }, [owner])
@@ -59,20 +62,23 @@ export const Nft = ({
   // You can now display the NFT metadata.
   const realId = nft.name.split('#').pop()
   const og = realId == tokenId
+  const nftProps = { og, isWrapper };
   return (
     <Flex
       m="5"
       justifyContent="center"
       flexDirection="column"
       alignItems="center"
+      position="relative"
     >
+      <NFTProps nftProps={nftProps} />
       <Flex justifyContent="center">
         <Text
           bgClip={og && 'text'}
           bgGradient={og && 'linear(to-l, #7928CA, #FF0080)'}
           fontSize="xl"
           as="h2"
-          pb="5"
+          py="3"
         >
           {og ? `Token #${realId}` : `Copy of ${realId}`}
         </Text>
