@@ -6,7 +6,6 @@ import { useEthers } from '@usedapp/core'
 import { Box, Text, SimpleGrid, Divider } from '@chakra-ui/layout'
 import { Nft } from '../atoms/NFT'
 import { TANavigator } from '../atoms/TANavigator'
-import { DEFAULT_COLLECTION_SIZE } from '../../lib/constants'
 
 export const TAList = ({
   address,

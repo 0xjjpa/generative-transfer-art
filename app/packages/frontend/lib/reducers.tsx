@@ -89,7 +89,6 @@ export async function fetchBalance({
           return false;
         }
       })
-      console.log("FITER", filteredTokensId)
       dispatch({
         type: 'SET_BALANCE',
         balance: `${+totalTokensOwnedByAccount.toString() - invalidTokenIds}`,

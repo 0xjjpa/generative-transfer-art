@@ -50,7 +50,6 @@ function HomeIndex(): JSX.Element {
 
   useEffect(() => {
     if (utils.isAddress(state.address)) {
-      console.log("LOADING NEW ADDRESS", state.address);
       const currentAddress = utils.getAddress(state.address)
       setCurrentAddress(currentAddress)
     }
@@ -58,7 +57,6 @@ function HomeIndex(): JSX.Element {
   }, [state.address])
 
   const addressToLoad = currentAddress ? currentAddress : account;
-  console.log('addresstl', addressToLoad)
 
   return (
     <Layout>
@@ -74,7 +72,7 @@ function HomeIndex(): JSX.Element {
           <Divider my="8" borderColor="gray.400" />
           <Box my="5">
             <Text mb="2">
-              Look up someone's collection, either by pasting an address or
+              Look up someone’s collection, either by pasting an address or
               clicking them in the gallery.
             </Text>
             <InputGroup>
