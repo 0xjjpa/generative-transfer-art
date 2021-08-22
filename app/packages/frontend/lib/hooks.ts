@@ -4,19 +4,15 @@ import { useContractCall } from '@usedapp/core'
 import { Interface } from '@ethersproject/abi'
 import { Falsy } from '@usedapp/core/dist/esm/src/model/types'
 
-export function ownerOf(tokenId: string | Falsy, contractAddress: string, abi: Interface): string | undefined {
+export function useOwner(tokenId: string | Falsy): string | undefined {
   const [owner] =
     useContractCall(
       tokenId && {
-        abi,
-        address: contractAddress,
+        abi: new Interface(TransferArt.abi),
+        address: TRANSFER_ART_CONTRACT_ADDRESS,
         method: 'ownerOf',
         args: [tokenId],
       }
     ) ?? []
-  return owner;
-}
-
-export function useOwner(tokenId: string | Falsy): string | undefined {
-  return ownerOf(tokenId, TRANSFER_ART_CONTRACT_ADDRESS, new Interface(TransferArt.abi))
+  return owner
 }
