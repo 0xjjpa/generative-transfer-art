@@ -1,4 +1,4 @@
-import { Box, Text, Image, Skeleton, Flex, Link } from '@chakra-ui/react'
+import { Box, Text, Image, Skeleton, Flex, Link, useColorMode } from '@chakra-ui/react'
 import { useNft } from 'use-nft'
 import { ENS } from './ENS'
 import { useOwner } from '../../lib/hooks'
@@ -13,6 +13,8 @@ export const Nft = ({
   tokenId: string
 }) => {
   const { loading, error, nft } = useNft(address, tokenId)
+  const { colorMode } = useColorMode()
+  const bgColor = { light: 'gray.50', dark: 'gray.600' }
   const owner = useOwner(tokenId)
 
   // nft.loading is true during load.
@@ -42,7 +44,8 @@ export const Nft = ({
           {og ? `Token #${realId}` : `Copy of ${realId}`}
         </Text>
       </Flex>
-      <Box p="5" background="whiteAlpha.900" border="1px solid #ddd">
+      
+      <Box p="5" bg={bgColor[colorMode]} border="1px solid #ddd">
         <Image src={nft.image} alt={nft.name} />
       </Box>
       <Text mt="2" fontSize="small">

@@ -1,7 +1,5 @@
 import { useEthers } from '@usedapp/core'
-import {
-  DEFAULT_COLLECTION_SIZE,
-} from '../../lib/constants'
+import { DEFAULT_COLLECTION_SIZE } from '../../lib/constants'
 import { TransferArt as TRANSFER_ART_CONTRACT_ADDRESS } from '../../artifacts/contracts/contractAddress'
 import { useState } from 'react'
 import { ethers } from 'ethers'
@@ -9,6 +7,7 @@ import { NftProvider } from 'use-nft'
 import { Box } from '@chakra-ui/layout'
 import { Nft } from '../atoms/NFT'
 import { TANavigator } from '../atoms/TANavigator'
+import { TAContainer } from '../atoms/TAContainer'
 import { Divider, SimpleGrid } from '@chakra-ui/react'
 import { getCurrentProvider } from '../../lib/connectors'
 
@@ -28,9 +27,9 @@ export const TACollection = () => {
         <Divider m="5" />
         <SimpleGrid columns={[1, 2, 2, 3]} spacing={5}>
           {tokenIds.map((tokenId) => (
-            <Box key={tokenId} background="blackAlpha.100" borderRadius="5">
+            <TAContainer tokenId={tokenId}>
               <Nft address={TRANSFER_ART_CONTRACT_ADDRESS} tokenId={tokenId} />
-            </Box>
+            </TAContainer>
           ))}
         </SimpleGrid>
         <Divider m="5" />
