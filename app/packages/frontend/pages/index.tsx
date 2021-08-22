@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  useColorMode,
 } from '@chakra-ui/react'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
 import { providers, utils } from 'ethers'
@@ -34,6 +35,8 @@ function HomeIndex(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [currentAddress, setCurrentAddress] = useState<string>('')
   const { account, chainId, library } = useEthers()
+  const { colorMode } = useColorMode()
+  const bgColor = { light: 'whiteAlpha.900', dark: 'blackAlpha.600' }
 
   const isLocalChain =
     chainId === ChainId.Localhost || chainId === ChainId.Hardhat
@@ -79,7 +82,7 @@ function HomeIndex(): JSX.Element {
             </Text>
             <InputGroup>
               <Input
-                background="white"
+                bg={bgColor[colorMode]}
                 type="text"
                 placeholder="0x1234..."
                 onChange={(e) => {
