@@ -34,7 +34,7 @@ export const TAList = ({
         <Text fontSize="lg" my="5">Owned {balance}</Text>
         <SimpleGrid columns={[1, 2, 2, 3]} spacing={10}>
           {currentTokenIds.map((tokenId) => (
-            <TAContainer tokenId={tokenId}>
+            <TAContainer key={tokenId}>
               <Nft address={TRANSFER_ART_CONTRACT_ADDRESS} tokenId={tokenId} />
             </TAContainer>
           ))}
