@@ -8,6 +8,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  useColorMode,
 } from '@chakra-ui/react'
 import { ChainId, useEthers, useSendTransaction } from '@usedapp/core'
 import { providers, utils } from 'ethers'
@@ -19,6 +20,8 @@ import Layout from '../components/layout/Layout'
 import { fetchBalance, initialState, reducer } from '../lib/reducers'
 import { useEffect } from 'react'
 import { getCurrentProvider } from '../lib/connectors'
+import { DarkModeSwitch } from '../components/atoms/DarkModeSwitch'
+import { TABox } from '../components/atoms/TABox'
 
 /**
  * Constants & Helpers
@@ -32,6 +35,8 @@ function HomeIndex(): JSX.Element {
   const [state, dispatch] = useReducer(reducer, initialState)
   const [currentAddress, setCurrentAddress] = useState<string>('')
   const { account, chainId, library } = useEthers()
+  const { colorMode } = useColorMode()
+  const bgColor = { light: 'whiteAlpha.900', dark: 'blackAlpha.600' }
 
   const isLocalChain =
     chainId === ChainId.Localhost || chainId === ChainId.Hardhat
@@ -53,10 +58,10 @@ function HomeIndex(): JSX.Element {
       const currentAddress = utils.getAddress(state.address)
       setCurrentAddress(currentAddress)
     }
-    return (() => setCurrentAddress(''))
+    return () => setCurrentAddress('')
   }, [state.address])
 
-  const addressToLoad = currentAddress ? currentAddress : account;
+  const addressToLoad = currentAddress ? currentAddress : account
 
   return (
     <Layout>
@@ -64,7 +69,7 @@ function HomeIndex(): JSX.Element {
         Generative Transfer Art Project 1
       </Heading>
       <SimpleGrid columns={[1, 1, 2, 2]} spacing={10}>
-        <Box p="8" mt="8" bg="gray.100">
+        <TABox>
           <Text fontSize="xl">Contract Address:</Text>
           <Text fontSize="xl" fontFamily="mono">
             {TRANSFER_ART_CONTRACT_ADDRESS}
@@ -77,7 +82,7 @@ function HomeIndex(): JSX.Element {
             </Text>
             <InputGroup>
               <Input
-                background="white"
+                bg={bgColor[colorMode]}
                 type="text"
                 placeholder="0x1234..."
                 onChange={(e) => {
@@ -137,11 +142,12 @@ function HomeIndex(): JSX.Element {
                 </Button>
               </>
             ))}
-        </Box>
-        <Box p="8" mt="8" bg="gray.100">
+        </TABox>
+        <TABox>
           <TACollection />
-        </Box>
+        </TABox>
       </SimpleGrid>
+      <DarkModeSwitch />
     </Layout>
   )
 }

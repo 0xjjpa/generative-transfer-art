@@ -5,6 +5,7 @@ import { NftProvider } from 'use-nft'
 import { useEthers } from '@usedapp/core'
 import { Box, Text, SimpleGrid, Divider } from '@chakra-ui/layout'
 import { Nft } from '../atoms/NFT'
+import { TAContainer } from '../atoms/TAContainer'
 import { TANavigator } from '../atoms/TANavigator'
 
 export const TAList = ({
@@ -33,9 +34,9 @@ export const TAList = ({
         <Text fontSize="lg" my="5">Owned {balance}</Text>
         <SimpleGrid columns={[1, 2, 2, 3]} spacing={10}>
           {currentTokenIds.map((tokenId) => (
-            <Box key={tokenId} background="blackAlpha.100" borderRadius="5">
+            <TAContainer key={tokenId}>
               <Nft address={TRANSFER_ART_CONTRACT_ADDRESS} tokenId={tokenId} />
-            </Box>
+            </TAContainer>
           ))}
         </SimpleGrid>
         <Divider m="5" />
