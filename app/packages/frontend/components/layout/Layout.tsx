@@ -147,9 +147,9 @@ const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       <footer>
         <Container mt="8" py="8" maxWidth="container.xl">
           <Text>
-            Concept by{' '}
+            Smart contracts by{' '}
             <Link isExternal fontWeight="600" href="https://twitter.com/wilsoncusack">Wilson Cusack</Link>,
-            application by{' '}
+            gallery by{' '}
             <Link isExternal fontWeight="600" href="https://twitter.com/jjperezaguinaga">Jose Aguinaga</Link>.
           </Text>
         </Container>
