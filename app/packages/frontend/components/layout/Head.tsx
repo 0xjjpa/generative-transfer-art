@@ -5,7 +5,7 @@ import React from 'react'
 /**
  * Constants & Helpers
  */
-export const WEBSITE_HOST_URL = 'https://generative-transfer-art-six.vercel.app/'
+export const WEBSITE_HOST_URL = 'https://generative-transfer.art'
 
 /**
  * Prop Types
@@ -25,7 +25,7 @@ const Head = ({ customMeta }: { customMeta?: MetaProps }): JSX.Element => {
   const meta: MetaProps = {
     title: 'Generative Transfer Art Project 1',
     description: 'The image of this NFT is created by its first 16 transfers, populating a 4x4 grid of squares. A new colored square is added on each transfer.',
-    image: `${WEBSITE_HOST_URL}/images/site-preview.png`,
+    image: `${WEBSITE_HOST_URL}/images/site-preview.jpg`,
     type: 'website',
     ...customMeta,
   }
