@@ -10,6 +10,7 @@ import { ethers } from 'ethers'
 export type StateType = {
   balance: string
   tokenIds: string[]
+  address: string
 }
 export type ActionType =
   | {
@@ -20,6 +21,10 @@ export type ActionType =
       type: 'SET_TOKEN_IDS'
       tokenIds: StateType['tokenIds']
     }
+  | {
+      type: 'SET_ADDRESS_SEARCH'
+      address: StateType['address']
+    }
 
 /**
  * Component
@@ -27,6 +32,7 @@ export type ActionType =
 export const initialState: StateType = {
   balance: '',
   tokenIds: [],
+  address: '',
 }
 
 export function reducer(state: StateType, action: ActionType): StateType {
@@ -40,6 +46,11 @@ export function reducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         tokenIds: action.tokenIds,
+      }
+    case 'SET_ADDRESS_SEARCH':
+      return {
+        ...state,
+        address: action.address,
       }
     default:
       throw new Error()
@@ -62,18 +73,29 @@ export async function fetchBalance({
       provider
     ) as TransferArtType
     try {
+      let invalidTokenIds = 0
       const totalTokensOwnedByAccount = await contract.balanceOf(address)
       const promisedTokenIdsByAccount = [
         ...Array(+totalTokensOwnedByAccount),
       ].map((_, index) => contract.tokenOfOwnerByIndex(address, index))
-      const tokenIdsByAccount = (await Promise.all(promisedTokenIdsByAccount)).map(tokenId => tokenId.toString())
+      const tokenIdsByAccount = (
+        await Promise.all(promisedTokenIdsByAccount)
+      ).map((tokenId) => tokenId.toString())
+      const filteredTokensId = tokenIdsByAccount.filter((tokenId) => {
+        if (tokenId != '0') {
+          return true
+        } else {
+          invalidTokenIds++;
+          return false;
+        }
+      })
       dispatch({
         type: 'SET_BALANCE',
-        balance: totalTokensOwnedByAccount.toString(),
+        balance: `${+totalTokensOwnedByAccount.toString() - invalidTokenIds}`,
       })
       dispatch({
         type: 'SET_TOKEN_IDS',
-        tokenIds: tokenIdsByAccount,
+        tokenIds: filteredTokensId,
       })
     } catch (err) {
       // eslint-disable-next-line no-console

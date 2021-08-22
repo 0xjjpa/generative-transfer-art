@@ -1,4 +1,6 @@
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { getDefaultProvider } from 'ethers'
+import { DEFAULT_NETWORK, INFURA_CONFIGURATION } from './constants'
 
 const POLLING_INTERVAL = 12000
 const RPC_URLS: { [chainId: number]: string } = {
@@ -10,3 +12,5 @@ export const walletconnect = new WalletConnectConnector({
   qrcode: true,
   pollingInterval: POLLING_INTERVAL,
 })
+
+export const getCurrentProvider = (library) => library || getDefaultProvider(DEFAULT_NETWORK, INFURA_CONFIGURATION)
