@@ -1,6 +1,7 @@
 import { ChainId } from "@usedapp/core"
 
 export const INFURA_ID = '83ef2c49b4b04e5f84935bc3319d7aa7'
+export const WRAPPED_TOKEN_CONTRACT = '0xE796EbaCf88d4785bBc64cabc828f81FB8f7A9b7'
 export const PROVIDERS = {
   [ChainId.Mainnet]: `https://mainnet.infura.io/v3/${INFURA_ID}`,
   [ChainId.Hardhat]: 'http://localhost:8555',
