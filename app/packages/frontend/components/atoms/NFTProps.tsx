@@ -14,6 +14,14 @@ const NFT_PROPS_MAP = {
     color: 'pink',
     description: 'Wrap it good. Inside the wrapper contract, granted a magical pink pixel.',
   },
+  darkChild: {
+    color: 'black',
+    description: 'Dark child. You were minted too early my son. TokenID <64 yet a copy.'
+  },
+  nice: {
+    color: 'red',
+    description: 'Nice.'
+  }
 }
 
 export const NFTProps = ({ nftProps }: { nftProps: nftPropsType }) => {
