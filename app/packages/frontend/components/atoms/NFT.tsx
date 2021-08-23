@@ -7,11 +7,13 @@ import {
   Link,
   useColorMode,
 } from '@chakra-ui/react'
+import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { TransferArt as TRANSFER_ART_CONTRACT_ADDRESS } from '../../artifacts/contracts/contractAddress'
 import TransferArt from '../../artifacts/contracts/TransferArt.sol/TransferArt.json'
 import { useNft } from 'use-nft'
 import { ENS } from './ENS'
 import { useOwner } from '../../lib/hooks'
-import { DEFAULT_CHAIN_ID, WRAPPED_TOKEN_CONTRACT } from '../../lib/constants'
+import { DEFAULT_CHAIN_ID, MINTED_COPIES_BEFORE_FINAL_COLLECTION, MINTING_COLLECTION_SIZE, WRAPPED_TOKEN_CONTRACT } from '../../lib/constants'
 import { getExplorerAddressLink, useEthers } from '@usedapp/core'
 import { useEffect, useState } from 'react'
 import { TransferArt as TransferArtType } from '../../types/typechain'
@@ -62,7 +64,9 @@ export const Nft = ({
   // You can now display the NFT metadata.
   const realId = nft.name.split('#').pop()
   const og = realId == tokenId
-  const nftProps = { og, isWrapper };
+  const darkChild = +tokenId < (MINTING_COLLECTION_SIZE + MINTED_COPIES_BEFORE_FINAL_COLLECTION) && !og;
+  const nice = +tokenId == 69
+  const nftProps = { og, isWrapper, darkChild, nice }
   return (
     <Flex
       m="5"
@@ -87,9 +91,18 @@ export const Nft = ({
       <Box p="5" bg={bgColor[colorMode]} border="1px solid #ddd">
         <Image src={nft.image} alt={nft.name} />
       </Box>
-      <Text mt="2" fontSize="small">
-        Token Id #{tokenId}
-      </Text>
+      <Link
+        href={`https://opensea.io/assets/${TRANSFER_ART_CONTRACT_ADDRESS}/${tokenId}`}
+        display="flex"
+        alignItems="center"
+        mt="2"
+        isExternal
+      >
+        <Text fontSize="small">
+          Token Id #{tokenId}
+        </Text>
+        <ExternalLinkIcon pt="1"/>
+      </Link>
       <Link href={getExplorerAddressLink(owner, DEFAULT_CHAIN_ID)} isExternal>
         <ENS props={{ fontSize: 'xs' }} address={realOwner} />
       </Link>

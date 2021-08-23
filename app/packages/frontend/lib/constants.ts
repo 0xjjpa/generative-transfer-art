@@ -7,6 +7,8 @@ export const PROVIDERS = {
   [ChainId.Hardhat]: 'http://localhost:8555',
   [ChainId.Localhost]: 'http://localhost:8545',
 }
+export const MINTING_COLLECTION_SIZE = 64
+export const MINTED_COPIES_BEFORE_FINAL_COLLECTION = 5
 export const DEFAULT_COLLECTION_SIZE = 9
 export const DEFAULT_CHAIN_ID = ChainId.Mainnet
 export const DEFAULT_NETWORK = PROVIDERS[DEFAULT_CHAIN_ID]
