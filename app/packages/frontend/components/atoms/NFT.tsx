@@ -19,14 +19,17 @@ import { useEffect, useState } from 'react'
 import { TransferArt as TransferArtType } from '../../types/typechain'
 import { getCurrentProvider } from '../../lib/connectors'
 import { Contract } from 'ethers'
-import { NFTProps } from './NFTProps'
+import { NFTProps, NftPropsType } from './NFTProps'
+import { ActionType } from '../../lib/reducers'
 
 export const Nft = ({
   address,
   tokenId,
+  dispatch,
 }: {
   address: string
   tokenId: string
+  dispatch: React.Dispatch<ActionType>
 }) => {
   const { library } = useEthers()
   const { loading, error, nft } = useNft(address, tokenId)
@@ -66,7 +69,7 @@ export const Nft = ({
   const og = realId == tokenId
   const darkChild = +tokenId < (MINTING_COLLECTION_SIZE + MINTED_COPIES_BEFORE_FINAL_COLLECTION) && !og;
   const nice = +tokenId == 69
-  const nftProps = { og, isWrapper, darkChild, nice }
+  const nftProps: NftPropsType = { og, isWrapper, darkChild, nice }
 
   return (
     <Flex
@@ -76,7 +79,7 @@ export const Nft = ({
       alignItems="center"
       position="relative"
     >
-      <NFTProps nftProps={nftProps} />
+      <NFTProps tokenId={tokenId} nftProps={nftProps} dispatch={dispatch} />
       <Flex justifyContent="center">
         <Text
           bgClip={og && 'text'}

@@ -148,7 +148,7 @@ function HomeIndex(): JSX.Element {
               ))}
           </TABox>
           <TABox>
-            <TACollection />
+            <TACollection dispatch={dispatch} nftProps={state.nftProps} />
           </TABox>
         </SimpleGrid>
         <DarkModeSwitch />

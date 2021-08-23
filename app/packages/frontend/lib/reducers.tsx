@@ -3,11 +3,16 @@ import TransferArt from '../artifacts/contracts/TransferArt.sol/TransferArt.json
 import { Web3Provider } from '@ethersproject/providers'
 import { TransferArt as TransferArtType } from '../types/typechain'
 import { ethers } from 'ethers'
+import { NftPropsType } from '../components/atoms/NFTProps'
+
 
 export type StateType = {
   balance: string
   tokenIds: string[]
   address: string
+  nftProps: {
+    [tokenId: string]: NftPropsType
+  }
 }
 export type ActionType =
   | {
@@ -22,6 +27,11 @@ export type ActionType =
       type: 'SET_ADDRESS_SEARCH'
       address: StateType['address']
     }
+  | {
+    type: 'SET_PROPS_PER_TOKEN_ID'
+    tokenId: string
+    nftProps: NftPropsType
+  }
 
 /**
  * Component
@@ -30,6 +40,7 @@ export const initialState: StateType = {
   balance: '',
   tokenIds: [],
   address: '',
+  nftProps: {}
 }
 
 export function reducer(state: StateType, action: ActionType): StateType {
@@ -48,6 +59,11 @@ export function reducer(state: StateType, action: ActionType): StateType {
       return {
         ...state,
         address: action.address,
+      }
+    case 'SET_PROPS_PER_TOKEN_ID':
+      return {
+        ...state,
+        nftProps: { [action.tokenId]: action.nftProps, ...state.nftProps },
       }
     default:
       throw new Error()

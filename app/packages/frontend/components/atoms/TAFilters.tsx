@@ -1,6 +1,6 @@
 import { Tag } from '@chakra-ui/react'
 import { useContext } from 'react'
-import { FilterProvider, FilterContext } from '../../contexts/FilterContext'
+import { FilterContext } from '../../contexts/FilterContext'
 
 const Filter = ({ filter }: { filter: string }) => {
   const { state, dispatch } = useContext(FilterContext)
@@ -24,7 +24,7 @@ export const TAFilters = () => {
   return (
     <>
       {filters.map((filter) => (
-        <Filter filter={filter} />
+        <Filter key={filter} filter={filter} />
       ))}
     </>
   )
