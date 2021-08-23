@@ -119,6 +119,8 @@ function HomeIndex(): JSX.Element {
                 <Text>Please connect your wallet to see your tokens.</Text>
               ) : (
                 <TAList
+                  dispatch={dispatch}
+                  nftProps={state.nftProps}
                   address={addressToLoad}
                   balance={state.balance}
                   tokenIds={state.tokenIds}

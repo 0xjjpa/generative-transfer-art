@@ -11,7 +11,6 @@ import { TAContainer } from '../atoms/TAContainer'
 import { Divider, SimpleGrid } from '@chakra-ui/react'
 import { getCurrentProvider } from '../../lib/connectors'
 import { ActionType } from '../../lib/reducers'
-import { useEffect } from 'react'
 import { NftPropsType } from '../atoms/NFTProps'
 import { FilterContext } from '../../contexts/FilterContext'
 
@@ -30,10 +29,6 @@ export const TACollection = ({
     (_, tokenId) => `${page * DEFAULT_COLLECTION_SIZE + tokenId + 1}`
   )
 
-  useEffect(() => {
-    console.log('NFTPROPS', nftProps)
-    console.log('STATE', state)
-  }, [state])
   return (
     <NftProvider
       fetcher={['ethers', { ethers, provider: library || provider }]}
