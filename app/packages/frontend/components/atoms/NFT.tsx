@@ -67,6 +67,7 @@ export const Nft = ({
   const darkChild = +tokenId < (MINTING_COLLECTION_SIZE + MINTED_COPIES_BEFORE_FINAL_COLLECTION) && !og;
   const nice = +tokenId == 69
   const nftProps = { og, isWrapper, darkChild, nice }
+
   return (
     <Flex
       m="5"

@@ -4,9 +4,6 @@ import { Web3Provider } from '@ethersproject/providers'
 import { TransferArt as TransferArtType } from '../types/typechain'
 import { ethers } from 'ethers'
 
-/**
- * Prop Types
- */
 export type StateType = {
   balance: string
   tokenIds: string[]
