@@ -13,6 +13,7 @@ import { MulticallContract } from '../artifacts/contracts/contractAddress'
 export const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad'
 
 const config: Config = {
+  readOnlyChainId: ChainId.Mainnet,
   readOnlyUrls: {
     [ChainId.Mainnet]: `https://mainnet.infura.io/v3/${INFURA_ID}`,
     [ChainId.Hardhat]: 'http://localhost:8545',
