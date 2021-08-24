@@ -22,6 +22,8 @@ import { useEffect } from 'react'
 import { getCurrentProvider } from '../lib/connectors'
 import { DarkModeSwitch } from '../components/atoms/DarkModeSwitch'
 import { TABox } from '../components/atoms/TABox'
+import { TAFilters } from '../components/atoms/TAFilters'
+import { FilterProvider } from '../contexts/FilterContext'
 
 /**
  * Constants & Helpers
@@ -65,89 +67,94 @@ function HomeIndex(): JSX.Element {
 
   return (
     <Layout>
-      <Heading as="h1" mb="8">
-        Generative Transfer Art Project 1
-      </Heading>
-      <SimpleGrid columns={[1, 1, 2, 2]} spacing={10}>
-        <TABox>
-          <Text fontSize="xl">Contract Address:</Text>
-          <Text fontSize="xl" fontFamily="mono">
-            {TRANSFER_ART_CONTRACT_ADDRESS}
-          </Text>
-          <Divider my="8" borderColor="gray.400" />
-          <Box my="5">
-            <Text mb="2">
-              Look up someone’s collection, either by pasting an address or
-              clicking them in the gallery.
+      <FilterProvider>
+        <Heading as="h1" mb="8">
+          Generative Transfer Art Project 1
+        </Heading>
+        <TAFilters />
+        <SimpleGrid columns={[1, 1, 2, 2]} spacing={10}>
+          <TABox>
+            <Text fontSize="xl">Contract Address:</Text>
+            <Text fontSize="xl" fontFamily="mono">
+              {TRANSFER_ART_CONTRACT_ADDRESS}
             </Text>
-            <InputGroup>
-              <Input
-                bg={bgColor[colorMode]}
-                type="text"
-                placeholder="0x1234..."
-                onChange={(e) => {
-                  dispatch({
-                    type: 'SET_ADDRESS_SEARCH',
-                    address: e.target.value,
-                  })
-                }}
-              />
-              {state.address != '' && (
-                <InputRightElement width="4.5rem">
-                  <Button
-                    h="1.75rem"
-                    size="sm"
-                    onClick={() => {
-                      dispatch({
-                        type: 'SET_ADDRESS_SEARCH',
-                        address: '',
-                      })
-                    }}
-                  >
-                    Reset
-                  </Button>
-                </InputRightElement>
+            <Divider my="8" borderColor="gray.400" />
+            <Box my="5">
+              <Text mb="2">
+                Look up someone’s collection, either by pasting an address or
+                clicking them in the gallery.
+              </Text>
+              <InputGroup>
+                <Input
+                  bg={bgColor[colorMode]}
+                  type="text"
+                  placeholder="0x1234..."
+                  onChange={(e) => {
+                    dispatch({
+                      type: 'SET_ADDRESS_SEARCH',
+                      address: e.target.value,
+                    })
+                  }}
+                />
+                {state.address != '' && (
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={() => {
+                        dispatch({
+                          type: 'SET_ADDRESS_SEARCH',
+                          address: '',
+                        })
+                      }}
+                    >
+                      Reset
+                    </Button>
+                  </InputRightElement>
+                )}
+              </InputGroup>
+            </Box>
+            <Box>
+              {!addressToLoad ? (
+                <Text>Please connect your wallet to see your tokens.</Text>
+              ) : (
+                <TAList
+                  dispatch={dispatch}
+                  nftProps={state.nftProps}
+                  address={addressToLoad}
+                  balance={state.balance}
+                  tokenIds={state.tokenIds}
+                  loadBalance={() =>
+                    fetchBalance({
+                      provider: getCurrentProvider(library),
+                      address: addressToLoad,
+                      dispatch,
+                    })
+                  }
+                />
               )}
-            </InputGroup>
-          </Box>
-          <Box>
-            {!addressToLoad ? (
-              <Text>Please connect your wallet to see your tokens.</Text>
-            ) : (
-              <TAList
-                address={addressToLoad}
-                balance={state.balance}
-                tokenIds={state.tokenIds}
-                loadBalance={() =>
-                  fetchBalance({
-                    provider: getCurrentProvider(library),
-                    address: addressToLoad,
-                    dispatch,
-                  })
-                }
-              />
-            )}
-          </Box>
-          {chainId == 1337 ||
-            (chainId == 31337 && (
-              <>
-                <Divider my="8" borderColor="gray.400" />
-                <Text mb="4">This button only works on a Local Chain.</Text>
-                <Button
-                  colorScheme="teal"
-                  onClick={sendFunds}
-                  isDisabled={!isLocalChain}
-                >
-                  Send Funds From Local Hardhat Chain
-                </Button>
-              </>
-            ))}
-        </TABox>
-        <TABox>
-          <TACollection />
-        </TABox>
-      </SimpleGrid>
-      <DarkModeSwitch />
+            </Box>
+            {chainId == 1337 ||
+              (chainId == 31337 && (
+                <>
+                  <Divider my="8" borderColor="gray.400" />
+                  <Text mb="4">This button only works on a Local Chain.</Text>
+                  <Button
+                    colorScheme="teal"
+                    onClick={sendFunds}
+                    isDisabled={!isLocalChain}
+                  >
+                    Send Funds From Local Hardhat Chain
+                  </Button>
+                </>
+              ))}
+          </TABox>
+          <TABox>
+            <TACollection dispatch={dispatch} nftProps={state.nftProps} />
+          </TABox>
+        </SimpleGrid>
+        <DarkModeSwitch />
+      </FilterProvider>
     </Layout>
   )
 }
