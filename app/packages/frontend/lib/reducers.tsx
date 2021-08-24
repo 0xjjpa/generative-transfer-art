@@ -4,7 +4,7 @@ import { Web3Provider } from '@ethersproject/providers'
 import { TransferArt as TransferArtType } from '../types/typechain'
 import { ethers } from 'ethers'
 import { NftPropsType } from '../components/atoms/NFTProps'
-
+import { WRAPPED_TOKEN_CONTRACT } from './constants'
 
 export type StateType = {
   balance: string
@@ -28,10 +28,10 @@ export type ActionType =
       address: StateType['address']
     }
   | {
-    type: 'SET_PROPS_PER_TOKEN_ID'
-    tokenId: string
-    nftProps: NftPropsType
-  }
+      type: 'SET_PROPS_PER_TOKEN_ID'
+      tokenId: string
+      nftProps: NftPropsType
+    }
 
 /**
  * Component
@@ -40,7 +40,7 @@ export const initialState: StateType = {
   balance: '',
   tokenIds: [],
   address: '',
-  nftProps: {}
+  nftProps: {},
 }
 
 export function reducer(state: StateType, action: ActionType): StateType {
@@ -80,39 +80,61 @@ export async function fetchBalance({
   dispatch: React.Dispatch<ActionType>
 }): Promise<void> {
   if (provider) {
-    const contract = new ethers.Contract(
+    const tokensAndBalancesPerContractPromises = [
+      WRAPPED_TOKEN_CONTRACT,
       TRANSFER_ART_CONTRACT_ADDRESS,
-      TransferArt.abi,
-      provider
-    ) as TransferArtType
-    try {
-      let invalidTokenIds = 0
-      const totalTokensOwnedByAccount = await contract.balanceOf(address)
-      const promisedTokenIdsByAccount = [
-        ...Array(+totalTokensOwnedByAccount),
-      ].map((_, index) => contract.tokenOfOwnerByIndex(address, index))
-      const tokenIdsByAccount = (
-        await Promise.all(promisedTokenIdsByAccount)
-      ).map((tokenId) => tokenId.toString())
-      const filteredTokensId = tokenIdsByAccount.filter((tokenId) => {
-        if (tokenId != '0') {
-          return true
-        } else {
-          invalidTokenIds++;
-          return false;
+    ].map(async (contractAddress) => {
+      const contract = new ethers.Contract(
+        contractAddress,
+        TransferArt.abi,
+        provider
+      ) as TransferArtType
+      try {
+        let invalidTokenIds = 0
+        const totalTokensOwnedByAccount = await contract.balanceOf(address)
+        const promisedTokenIdsByAccount = [
+          ...Array(+totalTokensOwnedByAccount),
+        ].map((_, index) => contract.tokenOfOwnerByIndex(address, index))
+        const tokenIdsByAccount = (
+          await Promise.all(promisedTokenIdsByAccount)
+        ).map((tokenId) => tokenId.toString())
+        const filteredTokensId = tokenIdsByAccount.filter((tokenId) => {
+          if (tokenId != '0') {
+            return true
+          } else {
+            invalidTokenIds++
+            return false
+          }
+        })
+        return {
+          tokenIds: filteredTokensId,
+          balance: `${+totalTokensOwnedByAccount.toString() - invalidTokenIds}`,
         }
-      })
-      dispatch({
-        type: 'SET_BALANCE',
-        balance: `${+totalTokensOwnedByAccount.toString() - invalidTokenIds}`,
-      })
-      dispatch({
-        type: 'SET_TOKEN_IDS',
-        tokenIds: filteredTokensId,
-      })
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log('Error: ', err)
-    }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log('Error: ', err)
+      }
+    })
+    const tokensAndBalancesPerContract = await Promise.all(
+      tokensAndBalancesPerContractPromises
+    )
+    const { tokenIds, balance } = tokensAndBalancesPerContract.reduce(
+      (acc, val) => {
+        const { tokenIds, balance } = val
+        return {
+          tokenIds: tokenIds.concat(acc.tokenIds),
+          balance: `${+acc.balance + +balance}`,
+        }
+      },
+      { tokenIds: [], balance: '' }
+    )
+    dispatch({
+      type: 'SET_BALANCE',
+      balance,
+    })
+    dispatch({
+      type: 'SET_TOKEN_IDS',
+      tokenIds,
+    })
   }
 }
