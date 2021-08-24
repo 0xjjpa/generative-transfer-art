@@ -107,7 +107,7 @@ export const Nft = ({
         </Text>
         <ExternalLinkIcon pt="1"/>
       </Link>
-      <Link href={getExplorerAddressLink(owner, DEFAULT_CHAIN_ID)} isExternal>
+      <Link href={getExplorerAddressLink(realOwner, DEFAULT_CHAIN_ID)} isExternal>
         <ENS props={{ fontSize: 'xs' }} address={realOwner} />
       </Link>
     </Flex>

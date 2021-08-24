@@ -39,7 +39,7 @@ export const TACollection = ({
         <SimpleGrid columns={[1, 2, 2, 3]} spacing={5}>
           {tokenIds.map((tokenId) => {
             const isSelected = Object.keys(state).reduce(
-              (acc, val) => acc && nftProps && nftProps[tokenId] && nftProps[tokenId][val],
+              (acc, val) => acc && nftProps && nftProps[tokenId] && nftProps[tokenId][val] || !state[val],
               true
             )
             return (
