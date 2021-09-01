@@ -17,12 +17,6 @@ export default class Document extends NextDocument {
       <Html>
         <Head>
           <script dangerouslySetInnerHTML={{__html: scriptTxt}}/>
-          <link
-            rel="preload"
-            href="/fonts/CenturySchl-Roma.ttf"
-            as="font"
-            crossOrigin=""
-          />
         </Head>
         <body>
           {/* Make Color mode to persists when you refresh the page. */}

@@ -20,7 +20,6 @@ import Layout from '../components/layout/Layout'
 import { fetchBalance, initialState, reducer } from '../lib/reducers'
 import { useEffect } from 'react'
 import { getCurrentProvider } from '../lib/connectors'
-import { DarkModeSwitch } from '../components/atoms/DarkModeSwitch'
 import { TABox } from '../components/atoms/TABox'
 import { TAFilters } from '../components/atoms/TAFilters'
 import { FilterProvider } from '../contexts/FilterContext'
@@ -153,7 +152,6 @@ function HomeIndex(): JSX.Element {
             <TACollection dispatch={dispatch} nftProps={state.nftProps} />
           </TABox>
         </SimpleGrid>
-        <DarkModeSwitch />
       </FilterProvider>
     </Layout>
   )

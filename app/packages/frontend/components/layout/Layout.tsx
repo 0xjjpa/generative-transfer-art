@@ -20,6 +20,7 @@ import { useEthers, useNotifications } from '@usedapp/core'
 import blockies from 'blockies-ts'
 import NextLink from 'next/link'
 import React from 'react'
+import { DarkModeSwitch } from '../atoms/DarkModeSwitch'
 import Balance from '../Balance'
 import ConnectWallet from '../ConnectWallet'
 import Head, { MetaProps } from './Head'
@@ -70,6 +71,7 @@ const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
     <>
       <Head customMeta={customMeta} />
       <header>
+      <DarkModeSwitch />
         <Container maxWidth="container.xl">
           <SimpleGrid
             columns={[1, 1, 1, 2]}
