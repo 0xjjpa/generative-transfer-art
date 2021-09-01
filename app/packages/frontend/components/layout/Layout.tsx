@@ -78,9 +78,19 @@ const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
             py="8"
           >
             <Flex py={[4, null, null, 0]}>
-              <NextLink href="/" passHref>
+            <NextLink href="/" passHref>
                 <Link px="4" py="1">
                   Home
+                </Link>
+              </NextLink>
+              <NextLink href="/p1" passHref>
+                <Link px="4" py="1">
+                  Project 1
+                </Link>
+              </NextLink>
+              <NextLink href="/p2" passHref>
+                <Link px="4" py="1">
+                  Project 2
                 </Link>
               </NextLink>
             </Flex>
@@ -147,9 +157,9 @@ const Layout = ({ children, customMeta }: LayoutProps): JSX.Element => {
       <footer>
         <Container mt="8" py="8" maxWidth="container.xl">
           <Text>
-            Smart contracts by{' '}
-            <Link isExternal fontWeight="600" href="https://twitter.com/wilsoncusack">Wilson Cusack</Link>,
-            gallery by{' '}
+            Concept, smart contracts and execution by{' '}
+            <Link isExternal fontWeight="600" href="https://twitter.com/wilsoncusack">Wilson Cusack</Link>.
+            Gallery by{' '}
             <Link isExternal fontWeight="600" href="https://twitter.com/jjperezaguinaga">Jose Aguinaga</Link>.
           </Text>
         </Container>

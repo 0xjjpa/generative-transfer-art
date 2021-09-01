@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import {
   ChainId,
   Config,
@@ -31,10 +31,17 @@ const config: Config = {
   },
 }
 
+const theme = extendTheme({
+  fonts: {
+    heading: "Century",
+    body: "Century",
+  },
+})
+
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
     <DAppProvider config={config}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
     </DAppProvider>
