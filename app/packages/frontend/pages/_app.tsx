@@ -1,4 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import {
   ChainId,
   Config,
@@ -8,6 +8,7 @@ import {
 import type { AppProps } from 'next/app'
 import React from 'react'
 import { MulticallContract } from '../artifacts/contracts/contractAddress'
+import Fonts from '../components/atoms/Fonts'
 
 // scaffold-eth's INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
 export const INFURA_ID = '460f40a260564ac4a4f4b3fffb032dad'
@@ -31,10 +32,18 @@ const config: Config = {
   },
 }
 
+const theme = extendTheme({
+  fonts: {
+    heading: "Century",
+    body: "Century",
+  },
+})
+
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
     <DAppProvider config={config}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Fonts/>
         <Component {...pageProps} />
       </ChakraProvider>
     </DAppProvider>
