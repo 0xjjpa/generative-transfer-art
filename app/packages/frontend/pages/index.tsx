@@ -54,7 +54,7 @@ function P1(): JSX.Element {
               </NextLink>
             </ListItem>
             <ListItem mt="2">
-              Project 2 - Animal Coloring Book <Tag colorScheme="green">Minting completed</Tag>{' '}
+              Project 2 - Animal Coloring Book <Tag>Minting completed</Tag>{' '}
               <Link
                 px="4"
                 py="1"
