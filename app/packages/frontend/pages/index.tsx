@@ -54,14 +54,14 @@ function P1(): JSX.Element {
               </NextLink>
             </ListItem>
             <ListItem mt="2">
-              Project 2 - Animal Coloring Book <Tag colorScheme="green">Ongoing</Tag>{' '}
+              Project 2 - Animal Coloring Book <Tag>Minting completed</Tag>{' '}
               <Link
                 px="4"
                 py="1"
                 href="https://generative-transfer-art.vercel.app/"
                 isExternal
               >
-                Go mint. <ExternalLinkIcon boxSize="3" />
+                See Gallery. <ExternalLinkIcon boxSize="3" />
               </Link>
             </ListItem>
           </List>
