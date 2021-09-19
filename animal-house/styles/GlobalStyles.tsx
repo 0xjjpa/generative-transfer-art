@@ -17,8 +17,8 @@ export default function GlobalStyles() {
           --border-light: 1px solid #dbdbdb;
 
           /* FONTS */
-          --font-a: Helvetica, Arial, sans-serif;
-          --font-b: Courier, monospace;
+          --font-a: Century, sans-serif;
+          --font-b: Century, monospace;
           
           /* SPACING */
           --base-unit: 8px;
@@ -116,6 +116,14 @@ export default function GlobalStyles() {
           padding-bottom: var(--space-sm);
           line-height: 1.35;
           font-weight: 400;
+        }
+
+        @font-face {
+          font-family: "Century";
+          font-style: normal;
+          font-display: swap;
+          src: url('/fonts/CenturySchL-Roma.ttf');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }
 
         /* CUSTOM */

@@ -1,4 +1,7 @@
 import styled from "@emotion/styled";
+
+import introduction from "../content/introduction.md";
+import Markdown from "../components/Markdown";
 import Head from "../components/head";
 import { PageWrapper } from "../styles/components";
 import { GetStaticProps } from "next";
@@ -16,6 +19,7 @@ export default function Home({ tokens }: { tokens: any }) {
     <IndexWrapper>
       <Head />
       <h1>{process.env.NEXT_PUBLIC_APP_TITLE}</h1>
+      
       <AuctionsList tokens={tokens} />
     </IndexWrapper>
   );
