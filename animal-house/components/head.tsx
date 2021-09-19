@@ -4,7 +4,7 @@ const defaultTitle = process.env.NEXT_PUBLIC_APP_TITLE || '';
 const defaultDescription = process.env.NEXT_PUBLIC_DEFAULT_DESCRIPTION || '';
 const defaultOGURL = process.env.NEXT_PUBLIC_BASE_URL || '';
 const defaultOGImage = `${process.env.NEXT_PUBLIC_BASE_URL}/fpo/social-card.jpg`;
-const favicon = '/fpo/favicon.png'
+const favicon = '/fpo/favicon.ico'
 
 type HeadProps = {
   title?: string,
