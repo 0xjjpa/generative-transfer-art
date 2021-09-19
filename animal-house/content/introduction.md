@@ -1,0 +1,5 @@
+Animal Coloring Book is a Generative Transfer Art Project, building on [GTAP1](https://opensea.io/collection/wgtap1-og). 
+
+On each of the first four transfers, a part of the image is colored. The color is determined by the address the NFT is sent to. On mint, the NFT is given one of six animal types, but is initially blank. On the fourth transfer, the Animal's mood is revealed - the coloring and animation of its eyes. 
+
+The 10x10 SVG art and animation are generated and stored entirely on-chain. Erasers go with this project. Each eraser has a one time use to erase an image: resetting all colors and mood. See them on [OpenSea](https://opensea.io/collection/animal-coloring-book) ([filter](https://opensea.io/collection/animal-coloring-book?search[stringTraits][0][name]=Coloring&search[stringTraits][0][values][0]=4%2F4) for fully colored). Join our [Discord](https://discord.gg/uuWTZvUJqG).
